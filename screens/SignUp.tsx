@@ -11,7 +11,7 @@ import { Heading } from "@components/ui/heading";
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
 
-export function SignIn() {
+export function SignUp() {
     return (
         <ScrollView showsVerticalScrollIndicator={false} className="flex-grow">
             <VStack className="w-full flex-1" space="md">
@@ -33,20 +33,18 @@ export function SignIn() {
 
                     <Center className="gap-4 flex-1">
                         <Heading className="color-gray-100 text-2xl">
-                            Acesse sua conta
+                            Crie sua conta
                         </Heading>
 
+                        <Input placeholder="Nome" />
                         <Input placeholder="E-mail" keyboardType="email-address" autoCapitalize="none" />
                         <Input placeholder="Senha" secureTextEntry />
 
-                        <Button size="xl" action="positive" variant="solid" title="Acessar" />
+                        <Button size="xl" action="positive" variant="solid" title="Criar e acessar" />
                     </Center>
 
                     <Center className="flex-end mt-16">
-                        <Text className="color-gray-100 text-sm mb-6 font-body">
-                            Ainda não tem acesso?
-                        </Text>
-                        <Button size="xl" action="positive" variant="outline" title="Criar conta" />
+                        <Button size="xl" action="positive" variant="outline" title="Voltar para o login" />
                     </Center>
                 </VStack>
             </VStack>
