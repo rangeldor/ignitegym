@@ -1,14 +1,12 @@
 import "./global.css";
 import { StatusBar } from "expo-status-bar";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from 'react';
 import { Roboto_400Regular, Roboto_700Bold, useFonts } from '@expo-google-fonts/roboto';
 
 import { GluestackUIProvider } from "@components/ui/gluestack-ui-provider";
 import { Loading } from "@components/Loading";
-import { SignIn } from "@screens/SignIn";
-import { Button, ButtonText } from "@components/ui/button";
-import { SignUp } from "@screens/SignUp";
+import { Routes } from "./routes";
+import { Button } from "@components/Button";
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Roboto_700Bold, Roboto_400Regular })
@@ -16,23 +14,16 @@ export default function App() {
 
   return (
     <GluestackUIProvider mode={colorMode}>
-      <StatusBar backgroundColor="transparent" style="auto" translucent />
+      <StatusBar backgroundColor="transparent" style='auto' translucent />
 
-      <SafeAreaView className="bg-background-0 flex-1">
-        <Button
-          onPress={() => {
-            setColorMode(colorMode === "light" ? "dark" : "light");
-          }}
-        >
-          <ButtonText>Toggle color mode</ButtonText>
-        </Button>
-        {fontsLoaded ?
+      {fontsLoaded ? <Routes mode={colorMode} /> : <Loading />}
 
-          <SignIn />
-          :
-          <Loading />
-        }
-      </SafeAreaView>
+      <Button
+        onPress={() => {
+          setColorMode(colorMode === "light" ? "dark" : "light");
+        }}
+        title="Toggle color mode"
+      />
     </GluestackUIProvider>
   )
 }
