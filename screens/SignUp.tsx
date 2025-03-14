@@ -11,7 +11,16 @@ import { Heading } from "@components/ui/heading";
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
 
+import { useNavigation } from "@react-navigation/native";
+import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
+
 export function SignUp() {
+    const navigation = useNavigation<AuthNavigatorRoutesProps>()
+
+    const handleBackToSignIn = () => {
+        navigation.navigate('signIn')
+    }
+
     return (
         <ScrollView showsVerticalScrollIndicator={false} className="flex-grow">
             <VStack className="w-full flex-1" space="md">
@@ -26,13 +35,13 @@ export function SignUp() {
                     <Center className="my-24">
                         <Logo />
 
-                        <Text className="color-gray-100 text-sm">
+                        <Text className="text-sm">
                             Treine sua mente e o seu corpo.
                         </Text>
                     </Center>
 
                     <Center className="gap-4 flex-1">
-                        <Heading className="color-gray-100 text-2xl">
+                        <Heading className="text-2xl">
                             Crie sua conta
                         </Heading>
 
@@ -44,7 +53,13 @@ export function SignUp() {
                     </Center>
 
                     <Center className="flex-end mt-16">
-                        <Button size="xl" action="positive" variant="outline" title="Voltar para o login" />
+                        <Button
+                            size="xl"
+                            action="positive"
+                            variant="outline"
+                            title="Voltar para o login"
+                            onPress={handleBackToSignIn}
+                        />
                     </Center>
                 </VStack>
             </VStack>
