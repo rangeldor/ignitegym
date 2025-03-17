@@ -24,6 +24,7 @@ export default function App() {
         }}
         title="Toggle color mode"
       />
+
     </GluestackUIProvider>
   )
 }
