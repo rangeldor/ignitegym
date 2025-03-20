@@ -7,7 +7,7 @@ interface Props {
 
 export function ScreenHeader({ title }: Props) {
     return (
-        <Card variant="filled" size="lg" className="pb-6 pt-16 items-center">
+        <Card variant="filled" size="lg" className="pb-10 pt-16 items-center">
             <Heading size="lg">{title}</Heading>
         </Card>
     )

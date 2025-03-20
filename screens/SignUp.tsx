@@ -48,6 +48,7 @@ export function SignUp() {
                         <Input placeholder="Nome" />
                         <Input placeholder="E-mail" keyboardType="email-address" autoCapitalize="none" />
                         <Input placeholder="Senha" secureTextEntry />
+                        <Input placeholder="Confirme a senha" secureTextEntry />
 
                         <Button size="xl" action="primary" variant="solid" title="Criar e acessar" />
                     </Center>

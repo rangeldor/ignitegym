@@ -15,7 +15,7 @@ export function Routes({ mode = 'dark' }: { mode?: ModeType; }) {
 
     return (
         <NavigationContainer theme={theme}>
-            <AppRoutes />
+            <AuthRoutes />
         </NavigationContainer>
     );
 }

@@ -12,7 +12,7 @@ import { LogOut } from 'lucide-react-native'
 export function HomeHeader() {
     return (
         <Card variant='filled'>
-            <HStack className='pt-16 pb-5 items-center gap-4'>
+            <HStack className='mt-10 pb-5 items-center gap-4'>
                 <UserPhoto source={{ uri: 'https://github.com/rangeldor.png' }} alt='Foto do usuário' size='sm' />
                 <VStack className="flex-1">
                     <Text>Olá,</Text>
