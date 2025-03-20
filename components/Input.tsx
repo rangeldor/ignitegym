@@ -1,28 +1,44 @@
 import { Input as GluestackInput, InputField } from "@components/ui/input";
 import { ComponentProps } from "react";
+import { FormControl, FormControlError, FormControlErrorText } from "./ui/form-control";
 
 interface Props extends ComponentProps<typeof InputField> {
+    errorMessage?: string | null
+    isInvalid?: boolean
     isReadOnly?: boolean
 }
 
-export function Input({ isReadOnly = false, ...rest }: Props) {
+export function Input({
+    isReadOnly = false,
+    errorMessage = null,
+    isInvalid = false,
+    ...rest
+}: Props) {
+    const invalid = !!errorMessage || isInvalid
+
     return (
-        <GluestackInput
-            className="rounded-md bg-background-0 h-16"
-            variant="outline"
-            size="xl"
-            isReadOnly={isReadOnly}
-            isDisabled={isReadOnly}
-        >
-            <InputField
-                className="
+        <FormControl isInvalid={invalid} className="w-full">
+            <GluestackInput
+                className="rounded-md bg-background-0 h-16"
+                variant="outline"
+                size="xl"
+                isInvalid={isInvalid}
+                isReadOnly={isReadOnly}
+                isDisabled={isReadOnly}
+            >
+                <InputField
+                    className="
                     px-4
-                    focus:border-2
-                    focus:border-primary-700                
-                    dark:focus:border-primary-500 
                 "
-                {...rest}
-            />
-        </GluestackInput>
+                    {...rest}
+                />
+            </GluestackInput>
+
+            <FormControlError>
+                <FormControlErrorText className="text-error-500">
+                    {errorMessage}
+                </FormControlErrorText>
+            </FormControlError>
+        </FormControl>
     );
 }
