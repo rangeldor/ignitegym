@@ -13,7 +13,7 @@ export function Button({ title, isLoading = false, ...rest }: Props) {
             className='w-full rounded-md'
             disabled={isLoading}
         >
-            {isLoading ? <ButtonSpinner size={"small"} className="color-white" /> :
+            {isLoading ? <ButtonSpinner size={"small"} /> :
                 <ButtonText>
                     {title}
                 </ButtonText>
