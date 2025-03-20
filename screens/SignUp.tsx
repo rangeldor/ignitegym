@@ -49,13 +49,13 @@ export function SignUp() {
                         <Input placeholder="E-mail" keyboardType="email-address" autoCapitalize="none" />
                         <Input placeholder="Senha" secureTextEntry />
 
-                        <Button size="xl" action="positive" variant="solid" title="Criar e acessar" />
+                        <Button size="xl" action="primary" variant="solid" title="Criar e acessar" />
                     </Center>
 
                     <Center className="flex-end mt-16">
                         <Button
                             size="xl"
-                            action="positive"
+                            action="primary"
                             variant="outline"
                             title="Voltar para o login"
                             onPress={handleBackToSignIn}

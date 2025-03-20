@@ -5,7 +5,7 @@ import { Spinner } from "@components/ui/spinner"
 export function Loading() {
     return (
         <Center className="flex-1">
-            <Spinner size={"large"} className="color-green-500" />
+            <Spinner size={"large"} className="color-primary-500" />
         </Center>
     )
 }

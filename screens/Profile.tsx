@@ -22,7 +22,7 @@ export function Profile() {
                     />
 
                     <TouchableOpacity>
-                        <Text className='text-success-500 text-md mt-4 mb-8 font-heading'>
+                        <Text className='text-primary-500 text-md mt-4 mb-8 font-heading'>
                             Alterar Foto
                         </Text>
                     </TouchableOpacity>
@@ -39,7 +39,7 @@ export function Profile() {
                         <Input placeholder="Nova senha" secureTextEntry />
                         <Input placeholder="Confirme a nova senha" secureTextEntry />
 
-                        <Button action='positive' variant='solid' size='xl' title='Atualizar' />
+                        <Button action='primary' variant='solid' size='xl' title='Atualizar' />
                     </Center>
                 </Center>
             </ScrollView>

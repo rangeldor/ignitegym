@@ -21,7 +21,7 @@ export function Exercise() {
                         <GoBackButton />
                     </VStack>
 
-                    <HStack className='justify-between items-center pb-16 pt-16'>
+                    <HStack className='justify-between items-center pb-4 pt-16'>
                         <Heading className='font-heading text-lg shrink'>
                             Puxada frontal
                         </Heading>

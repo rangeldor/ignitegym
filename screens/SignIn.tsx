@@ -48,14 +48,14 @@ export function SignIn() {
                         <Input placeholder="E-mail" keyboardType="email-address" autoCapitalize="none" />
                         <Input placeholder="Senha" secureTextEntry />
 
-                        <Button size="xl" action="positive" variant="solid" title="Acessar" />
+                        <Button size="xl" action="primary" variant="solid" title="Acessar" />
                     </Center>
 
                     <Center className="flex-end mt-16">
                         <Text className="text-sm mb-4 font-body">
                             Ainda não tem acesso?
                         </Text>
-                        <Button size="xl" action="positive" variant="outline" title="Criar conta" onPress={handleNewAccount} />
+                        <Button size="xl" action="primary" variant="outline" title="Criar conta" onPress={handleNewAccount} />
                     </Center>
                 </VStack>
             </VStack>

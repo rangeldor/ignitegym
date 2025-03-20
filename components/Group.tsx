@@ -14,18 +14,19 @@ export function Group({ name, isActive, ...rest }: Props) {
             className={`
                 min-w-24
                 h-10
-                bg-gray-600
+                bg-background-0
                 rounded-md
                 justify-center
                 items-center
-                border-success-300                
+                border-primary-500                
                 active:border
+                active:border-primary-500  
                 ${isActive ? 'border' : 'border-none'}
                 `}
         >
             <Text
                 className={`
-                ${isActive ? 'text-success-500' : 'text-typography-white'} 
+                ${isActive ? 'text-primary-500' : 'text-typography-900'} 
                 uppercase
                 text-sm
                 font-heading

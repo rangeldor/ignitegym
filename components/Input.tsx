@@ -18,8 +18,8 @@ export function Input({ isReadOnly = false, ...rest }: Props) {
                 className="
                     px-4
                     focus:border-2
-                    focus:border-green-700                
-                    dark:focus:border-green-500 
+                    focus:border-primary-700                
+                    dark:focus:border-primary-500 
                 "
                 {...rest}
             />
