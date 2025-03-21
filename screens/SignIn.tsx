@@ -13,12 +13,26 @@ import { Button } from "@components/Button";
 
 import { useNavigation } from "@react-navigation/native";
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
+import { useAuth } from "@hooks/useAuth";
+import { Controller, useForm } from "react-hook-form";
+
+interface FormData {
+    email: string
+    password: string
+}
 
 export function SignIn() {
+    const { signIn } = useAuth()
     const navigation = useNavigation<AuthNavigatorRoutesProps>()
+
+    const { control, handleSubmit, formState: { errors } } = useForm<FormData>()
 
     const handleNewAccount = () => {
         navigation.navigate('signUp')
+    }
+
+    const handleSignIn = async ({ email, password }: FormData) => {
+        await signIn(email, password)
     }
 
     return (
@@ -45,10 +59,44 @@ export function SignIn() {
                             Acesse sua conta
                         </Heading>
 
-                        <Input placeholder="E-mail" keyboardType="email-address" autoCapitalize="none" />
-                        <Input placeholder="Senha" secureTextEntry />
+                        <Controller
+                            control={control}
+                            name="email"
+                            rules={{ required: 'Informe o e-mail' }}
+                            render={({ field: { onChange, value } }) => (
+                                <Input
+                                    placeholder="E-mail"
+                                    keyboardType="email-address"
+                                    autoCapitalize="none"
+                                    onChangeText={onChange}
+                                    value={value}
+                                    errorMessage={errors.email?.message}
+                                />
+                            )}
+                        />
 
-                        <Button size="xl" action="primary" variant="solid" title="Acessar" />
+                        <Controller
+                            control={control}
+                            name="password"
+                            rules={{ required: 'Informe a senha' }}
+                            render={({ field: { onChange, value } }) => (
+                                <Input
+                                    placeholder="Senha"
+                                    secureTextEntry
+                                    onChangeText={onChange}
+                                    value={value}
+                                    errorMessage={errors.password?.message}
+                                />
+                            )}
+                        />
+
+                        <Button
+                            size="xl"
+                            action="primary"
+                            variant="solid"
+                            title="Acessar"
+                            onPress={handleSubmit(handleSignIn)}
+                        />
                     </Center>
 
                     <Center className="flex-end mt-16">
