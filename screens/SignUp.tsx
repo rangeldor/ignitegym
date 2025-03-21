@@ -10,6 +10,9 @@ import { Text } from "@components/ui/text";
 import { Heading } from "@components/ui/heading";
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
+import { Alert } from 'react-native';
+import axios from 'axios';
+import { AppError } from '@utils/AppError';
 
 import { useNavigation } from "@react-navigation/native";
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
@@ -17,6 +20,9 @@ import { Controller, useForm } from "react-hook-form";
 
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { api } from "@services/api";
+import { useToast } from "@components/ui/toast";
+import { ToastMessage } from "@components/ToastMessage";
 
 interface FormDataProps {
     name: string;
@@ -38,6 +44,8 @@ const signUpSchema = yup.object({
 type FormData = yup.InferType<typeof signUpSchema>;
 
 export function SignUp() {
+    const toast = useToast();
+
     const navigation = useNavigation<AuthNavigatorRoutesProps>()
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
         resolver: yupResolver(signUpSchema),
@@ -47,8 +55,29 @@ export function SignUp() {
         navigation.navigate('signIn')
     }
 
-    function handleSignUp({ name, email, password, password_confirm }: FormDataProps) {
-        console.log({ name, email, password, password_confirm })
+    const handleSignUp = async ({ name, email, password }: FormDataProps) => {
+        try {
+            const response = await api.post('/users', { name, email, password });
+            console.log(response.data);
+        } catch (error) {
+            const isAppError = error instanceof AppError;
+
+            const description = isAppError ? error.message : 'Não foi possível criar a conta. Tente novamente mais tarde';
+
+            toast.show({
+                placement: 'top',
+                duration: 6000,
+                render: ({ id }) => (
+                    <ToastMessage
+                        id={id}
+                        title='Erro!'
+                        description={description}
+                        action='error'
+                        onClose={() => toast.close(id)}
+                    />
+                )
+            })
+        }
     }
 
     return (
