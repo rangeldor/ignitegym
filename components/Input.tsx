@@ -6,10 +6,12 @@ interface Props extends ComponentProps<typeof InputField> {
     errorMessage?: string | null
     isInvalid?: boolean
     isReadOnly?: boolean
+    isDisabled?: boolean
 }
 
 export function Input({
     isReadOnly = false,
+    isDisabled = false,
     errorMessage = null,
     isInvalid = false,
     ...rest
@@ -24,7 +26,7 @@ export function Input({
                 size="xl"
                 isInvalid={isInvalid}
                 isReadOnly={isReadOnly}
-                isDisabled={isReadOnly}
+                isDisabled={isDisabled}
             >
                 <InputField
                     className="
