@@ -23,6 +23,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { api } from "@services/api";
 import { useToast } from "@components/ui/toast";
 import { ToastMessage } from "@components/ToastMessage";
+import { useState } from "react";
+import { useAuth } from "@hooks/useAuth";
 
 interface FormDataProps {
     name: string;
@@ -44,7 +46,10 @@ const signUpSchema = yup.object({
 type FormData = yup.InferType<typeof signUpSchema>;
 
 export function SignUp() {
+    const [isLoading, setIsLoading] = useState(false);
+
     const toast = useToast();
+    const { signIn } = useAuth();
 
     const navigation = useNavigation<AuthNavigatorRoutesProps>()
     const { control, handleSubmit, formState: { errors } } = useForm<FormData>({
@@ -57,8 +62,10 @@ export function SignUp() {
 
     const handleSignUp = async ({ name, email, password }: FormDataProps) => {
         try {
-            const response = await api.post('/users', { name, email, password });
-            console.log(response.data);
+            setIsLoading(true)
+
+            await api.post('/users', { name, email, password });
+            await signIn(email, password)
         } catch (error) {
             const isAppError = error instanceof AppError;
 
@@ -77,6 +84,8 @@ export function SignUp() {
                     />
                 )
             })
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -168,6 +177,7 @@ export function SignUp() {
                             variant="solid"
                             title="Criar e acessar"
                             onPress={handleSubmit(handleSignUp)}
+                            isLoading={isLoading}
                         />
                     </Center>
 

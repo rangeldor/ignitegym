@@ -15,6 +15,10 @@ import { useNavigation } from "@react-navigation/native";
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
 import { useAuth } from "@hooks/useAuth";
 import { Controller, useForm } from "react-hook-form";
+import { useToast } from "@components/ui/toast";
+import { AppError } from "@utils/AppError";
+import { ToastMessage } from "@components/ToastMessage";
+import { useState } from "react";
 
 interface FormData {
     email: string
@@ -23,16 +27,38 @@ interface FormData {
 
 export function SignIn() {
     const { signIn } = useAuth()
+    const toast = useToast();
     const navigation = useNavigation<AuthNavigatorRoutesProps>()
 
-    const { control, handleSubmit, formState: { errors } } = useForm<FormData>()
+    const { control, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>()
 
     const handleNewAccount = () => {
         navigation.navigate('signUp')
     }
 
-    const handleSignIn = async ({ email, password }: FormData) => {
-        await signIn(email, password)
+    async function handleSignIn({ email, password }: FormData) {
+
+        try {
+            await signIn(email, password);
+        } catch (error) {
+            const isAppError = error instanceof AppError;
+
+            const description = isAppError ? error.message : 'Não foi possível entrar. Tente novamente mais tarde.'
+
+            toast.show({
+                placement: 'top',
+                duration: 6000,
+                render: ({ id }) => (
+                    <ToastMessage
+                        id={id}
+                        title='Erro!'
+                        description={description}
+                        action='error'
+                        onClose={() => toast.close(id)}
+                    />
+                )
+            })
+        }
     }
 
     return (
@@ -96,6 +122,7 @@ export function SignIn() {
                             variant="solid"
                             title="Acessar"
                             onPress={handleSubmit(handleSignIn)}
+                            isLoading={isSubmitting}
                         />
                     </Center>
 
@@ -103,7 +130,14 @@ export function SignIn() {
                         <Text className="text-sm mb-4 font-body">
                             Ainda não tem acesso?
                         </Text>
-                        <Button size="xl" action="primary" variant="outline" title="Criar conta" onPress={handleNewAccount} />
+                        <Button
+                            size="xl"
+                            action="primary"
+                            variant="outline"
+                            title="Criar conta"
+                            onPress={handleNewAccount}
+                            isDisabled={isSubmitting}
+                        />
                     </Center>
                 </VStack>
             </VStack>
