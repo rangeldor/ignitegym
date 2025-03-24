@@ -7,16 +7,20 @@ import { Heading } from "./ui/heading";
 import { Text } from "./ui/text";
 import { Icon } from "./ui/icon";
 import { ChevronRight } from "lucide-react-native";
+import { ExerciseDTO } from "@dtos/ExerciseDTO";
+import { api } from "@services/api";
 
-interface Props extends TouchableOpacityProps { }
+interface Props extends TouchableOpacityProps {
+    data: ExerciseDTO;
+}
 
-export function ExerciseCard({ ...rest }: Props) {
+export function ExerciseCard({ data, ...rest }: Props) {
     return (
         <Card className="w-full">
             <TouchableOpacity {...rest}>
                 <HStack space="xl" className="items-center">
                     <Image
-                        source={{ uri: "https://i.pinimg.com/originals/f5/4c/a8/f54ca8ce21eb05de3599312300b75e93.jpg" }}
+                        source={{ uri: `${api.defaults.baseURL}/exercise/thumb/${data.thumb}` }}
                         alt="Imagem do exercício"
                         size="md"
                         className="rounded-md "
@@ -24,8 +28,10 @@ export function ExerciseCard({ ...rest }: Props) {
                     />
 
                     <VStack space="sm" className="flex-1">
-                        <Heading>Puxada frontal</Heading>
-                        <Text className="text-typography-500" numberOfLines={2}>3 séries x 12 repetições</Text>
+                        <Heading>{data.name}</Heading>
+                        <Text className="text-typography-500" numberOfLines={2}>
+                            {data.series} séries x {data.repetitions} repetições
+                        </Text>
                     </VStack>
 
                     <Icon as={ChevronRight} />
