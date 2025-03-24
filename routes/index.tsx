@@ -3,9 +3,8 @@ import { AuthRoutes } from './auth.routes';
 import { gray } from 'tailwindcss/colors';
 import { ModeType } from '@components/ui/gluestack-ui-provider/types';
 import { AppRoutes } from './app.routes';
-import { useContext } from 'react';
-import { AuthContext } from '@contexts/AuthContext';
 import { useAuth } from '@hooks/useAuth';
+import { Loading } from '@components/Loading';
 
 export function Routes({ mode = 'dark' }: { mode?: ModeType; }) {
     const theme = {
@@ -16,13 +15,15 @@ export function Routes({ mode = 'dark' }: { mode?: ModeType; }) {
         }
     };
 
-    const { user } = useAuth()
+    const { user, isLoadingUserStorageData } = useAuth();
 
-    console.log("USUÁRIO LOGADO =>", user);
+    if (isLoadingUserStorageData) {
+        return <Loading />
+    }
 
     return (
         <NavigationContainer theme={theme}>
-            <AuthRoutes />
+            {user.id ? <AppRoutes /> : <AuthRoutes />}
         </NavigationContainer>
     );
 }
