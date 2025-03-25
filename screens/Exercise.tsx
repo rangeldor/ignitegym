@@ -114,7 +114,7 @@ export function Exercise() {
     }, [exerciseId])
 
     return (
-        <VStack>
+        <VStack className='bg-background-100 h-full'>
             <Card className='pt-16'>
                 <VStack>
                     <VStack>

@@ -92,7 +92,7 @@ export function Home() {
     )
 
     return (
-        <VStack className="flex-1">
+        <VStack className="flex-1 bg-background-100 h-full">
             <HomeHeader />
 
             <FlatList

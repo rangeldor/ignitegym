@@ -18,7 +18,7 @@ export default function App() {
       <StatusBar backgroundColor="transparent" style='auto' translucent />
 
       <AuthContextProvider>
-        {fontsLoaded ? <Routes mode={colorMode} /> : <Loading />}
+        {fontsLoaded ? <Routes /> : <Loading />}
       </AuthContextProvider>
 
       <Button

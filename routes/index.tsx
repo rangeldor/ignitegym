@@ -1,20 +1,11 @@
-import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer } from '@react-navigation/native'
 import { AuthRoutes } from './auth.routes';
-import { gray } from 'tailwindcss/colors';
 import { ModeType } from '@components/ui/gluestack-ui-provider/types';
 import { AppRoutes } from './app.routes';
 import { useAuth } from '@hooks/useAuth';
 import { Loading } from '@components/Loading';
 
-export function Routes({ mode = 'dark' }: { mode?: ModeType; }) {
-    const theme = {
-        ...DefaultTheme,
-        colors: {
-            ...DefaultTheme.colors,
-            background: mode === 'dark' ? gray[950] : gray[200],
-        }
-    };
-
+export function Routes() {
     const { user, isLoadingUserStorageData } = useAuth();
 
     if (isLoadingUserStorageData) {
@@ -22,7 +13,7 @@ export function Routes({ mode = 'dark' }: { mode?: ModeType; }) {
     }
 
     return (
-        <NavigationContainer theme={theme}>
+        <NavigationContainer>
             {user.id ? <AppRoutes /> : <AuthRoutes />}
         </NavigationContainer>
     );

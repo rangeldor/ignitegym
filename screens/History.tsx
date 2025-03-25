@@ -53,7 +53,7 @@ export function History() {
     )
 
     return (
-        <VStack className="flex-1">
+        <VStack className="flex-1 bg-background-100">
             <ScreenHeader title="Histórico" />
             <SectionList
                 sections={exercises}

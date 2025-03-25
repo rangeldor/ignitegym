@@ -90,7 +90,7 @@ export function SignUp() {
     }
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false} className="flex-grow">
+        <ScrollView showsVerticalScrollIndicator={false} className="flex-grow bg-background-0 h-full">
             <VStack className="w-full flex-1" space="md">
                 <Image
                     source={BackgroundImg}
