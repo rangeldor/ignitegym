@@ -2,7 +2,7 @@ import axios from "axios";
 import { AppError } from "@utils/AppError";
 
 const api = axios.create({
-  baseURL: 'https://5fe5-2804-1b1-fc80-462-dcc0-35c8-16ff-e298.ngrok-free.app'
+  baseURL: 'https://5dc6-2804-1b1-fc80-17c-99b1-cf24-659-74c8.ngrok-free.app'
 });
 
 api.interceptors.response.use((response) => response, (error) => {
