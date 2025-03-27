@@ -31,7 +31,6 @@ export function AppRoutes() {
     return (
         <Navigator
             screenOptions={{
-                animation: 'shift',
                 headerShown: false,
                 tabBarShowLabel: false,
                 tabBarStyle: {
