@@ -1,4 +1,5 @@
 import { HistoryCard } from '@components/HistoryCard'
+import { Loading } from '@components/Loading'
 import { ScreenHeader } from '@components/ScreenHeader'
 import { ToastMessage } from '@components/ToastMessage'
 import { Heading } from '@components/ui/heading'
@@ -55,16 +56,20 @@ export function History() {
     return (
         <VStack className="flex-1 bg-background-100">
             <ScreenHeader title="Histórico" />
-            <SectionList
-                sections={exercises}
-                keyExtractor={item => item.id}
-                renderItem={({ item }) => <HistoryCard data={item} />}
-                renderSectionHeader={({ section: { title } }) => <Heading>{title}</Heading>}
-                style={{ paddingHorizontal: 32, marginTop: 16 }}
-                contentContainerStyle={exercises.length === 0 ? { flex: 1, justifyContent: 'center' } : { gap: 16 }}
-                ListEmptyComponent={<Heading>Nenhum exercício realizado</Heading>}
-                showsVerticalScrollIndicator={false}
-            />
+
+            {
+                isLoading ? <Loading /> :
+                    <SectionList
+                        sections={exercises}
+                        keyExtractor={item => item.id}
+                        renderItem={({ item }) => <HistoryCard data={item} />}
+                        renderSectionHeader={({ section: { title } }) => <Heading>{title}</Heading>}
+                        style={{ paddingHorizontal: 32, marginTop: 16 }}
+                        contentContainerStyle={exercises.length === 0 ? { flex: 1, justifyContent: 'center' } : { gap: 16 }}
+                        ListEmptyComponent={<Heading>Nenhum exercício realizado</Heading>}
+                        showsVerticalScrollIndicator={false}
+                    />
+            }
         </VStack>
     )
 }

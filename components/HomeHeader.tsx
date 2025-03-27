@@ -12,6 +12,7 @@ import { LogOut } from 'lucide-react-native'
 
 import defaultUserPhotoImg from '@assets/userPhotoDefault.png'
 import { Button, ButtonIcon } from './ui/button'
+import { api } from '@services/api'
 
 export function HomeHeader() {
     const { user, signOut } = useAuth()
@@ -19,7 +20,12 @@ export function HomeHeader() {
     return (
         <Card variant='filled'>
             <HStack className='mt-10 pb-5 items-center gap-4'>
-                <UserPhoto source={user.avatar ? { uri: user.avatar } : defaultUserPhotoImg} alt='Foto do usuário' size='sm' />
+                <UserPhoto source={
+                    user.avatar
+                        ? { uri: `${api.defaults.baseURL}/avatar/${user.avatar}` }
+                        : defaultUserPhotoImg
+                }
+                    alt='Foto do usuário' size='sm' />
                 <VStack className="flex-1">
                     <Text>Olá,</Text>
                     <Heading>{user.name}</Heading>

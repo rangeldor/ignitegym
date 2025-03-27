@@ -18,6 +18,8 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
 import { AppError } from '@utils/AppError'
 import { api } from '@services/api'
+import defaultUserPhotoImg from '@assets/userPhotoDefault.png';
+import { Skeleton } from '@components/ui/skeleton'
 
 const profileSchema = yup.object({
     name: yup.string().required('Informe seu nome.'),
@@ -39,7 +41,7 @@ type FormData = yup.InferType<typeof profileSchema>;
 
 export function Profile() {
     const [isUpdating, setIsUpdating] = useState(false);
-    const [userPhoto, setUserPhoto] = useState('https://github.com/rangeldor.png')
+    const [photoIsLoading, setPhotoIsLoading] = useState(false);
 
     const toast = useToast()
     const { user, updateUserProfile } = useAuth();
@@ -52,6 +54,8 @@ export function Profile() {
     });
 
     const handleUserPhotoSelect = async () => {
+        setPhotoIsLoading(true);
+
         try {
             const photoSelected = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ['images'],
@@ -60,9 +64,11 @@ export function Profile() {
                 quality: 1,
             })
 
-            if (photoSelected.canceled) return
+            if (photoSelected.canceled) {
+                return
+            }
 
-            const photoUri = photoSelected.assets[0].uri
+            const photoUri = photoSelected.assets[0].uri;
 
             if (photoUri) {
                 const photoInfo = (await FileSystem.getInfoAsync(photoUri))
@@ -83,12 +89,48 @@ export function Profile() {
                             )
                         })
                     } else {
-                        setUserPhoto(photoSelected.assets[0].uri)
+                        const fileExtension = photoUri.split('.').pop();
+                        const photoFile = {
+                            name: `${user.name}.${fileExtension}`.toLowerCase(),
+                            uri: photoUri,
+                            type: `${photoSelected.assets[0].type}/${fileExtension}`
+                        } as any;
+
+                        const userPhotoUploadForm = new FormData();
+
+                        userPhotoUploadForm.append('avatar', photoFile);
+
+                        const avatarUpdatedResponse = await api.patch('/users/avatar', userPhotoUploadForm, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        });
+
+                        const userUpdated = user;
+
+                        userUpdated.avatar = avatarUpdatedResponse.data.avatar;
+
+                        await updateUserProfile(userUpdated);
+
+                        toast.show({
+                            placement: 'top',
+                            duration: 6000,
+                            render: ({ id }) => (
+                                <ToastMessage
+                                    id={id}
+                                    title='Foto atualizada!'
+                                    action='success'
+                                    onClose={() => toast.close(id)}
+                                />
+                            )
+                        })
                     }
                 }
             }
         } catch (error) {
             console.log(error)
+        } finally {
+            setPhotoIsLoading(false)
         }
     }
 
@@ -143,11 +185,17 @@ export function Profile() {
 
             <ScrollView contentContainerStyle={{ paddingBottom: 36 }}>
                 <Center className='mt-8 px-10'>
-                    <UserPhoto
-                        source={{ uri: userPhoto }}
-                        alt='Foto do usuário'
-                        size='xl'
-                    />
+                    {
+                        photoIsLoading ?
+                            <Skeleton variant="circular" className="h-[24px] w-[24px] mr-2" />
+                            :
+                            <UserPhoto
+                                source={user?.avatar ? { uri: `${api.defaults.baseURL}/avatar/${user.avatar}` } : defaultUserPhotoImg}
+                                alt='Foto do usuário'
+                                size='xl'
+                                onError={() => console.log("Erro ao carregar imagem do usuário")}
+                            />
+                    }
 
                     <TouchableOpacity onPress={handleUserPhotoSelect}>
                         <Text className='text-primary-500 text-md mt-4 mb-8 font-heading'>
