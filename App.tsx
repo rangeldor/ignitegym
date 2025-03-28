@@ -7,17 +7,20 @@ import { Loading } from "@components/Loading";
 import { Routes } from "./routes";
 import { AuthContextProvider } from "@contexts/AuthContext";
 import { ThemeProvider, useTheme } from "@contexts/ThemeContext";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 function MainApp() {
   const { theme } = useTheme();
 
   return (
     <GluestackUIProvider mode={theme}>
-      <StatusBar backgroundColor="transparent" style="auto" translucent />
+      <SafeAreaView className="flex-1 bg-background-0">
+        <StatusBar backgroundColor="transparent" style="auto" translucent />
 
-      <AuthContextProvider>
-        <Routes />
-      </AuthContextProvider>
+        <AuthContextProvider>
+          <Routes />
+        </AuthContextProvider>
+      </SafeAreaView>
     </GluestackUIProvider>
   );
 }
