@@ -8,6 +8,7 @@ type Theme = "light" | "dark";
 interface ThemeContextType {
     theme: Theme;
     toggleTheme: () => void;
+    handleTheme: (value: Theme) => void;
 }
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(
@@ -35,8 +36,13 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
         AsyncStorage.setItem("theme", newTheme);
     };
 
+    const handleTheme = (value: Theme) => {
+        setTheme(value);
+        AsyncStorage.setItem("theme", value);
+    };
+
     return (
-        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+        <ThemeContext.Provider value={{ theme, toggleTheme, handleTheme }}>
             {children}
         </ThemeContext.Provider>
     );

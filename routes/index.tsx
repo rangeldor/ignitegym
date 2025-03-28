@@ -1,6 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native'
 import { AuthRoutes } from './auth.routes';
-import { ModeType } from '@components/ui/gluestack-ui-provider/types';
 import { AppRoutes } from './app.routes';
 import { useAuth } from '@hooks/useAuth';
 import { Loading } from '@components/Loading';
